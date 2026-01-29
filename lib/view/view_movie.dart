@@ -9,17 +9,26 @@ class ViewMovie extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return  Column(
-      children: [
-        Container(
-          height: 500,
-          width: 450,
-          decoration: BoxDecoration(
-            color:Colors.grey,
-            borderRadius: BorderRadius.circular(20),
-            image: DecorationImage(image: NetworkImage("https://image.tmdb.org/t/p/w500$image"))),),
+    return  Container(
+      margin: EdgeInsets.all(20),
+      padding: EdgeInsets.all(20),
+      decoration: BoxDecoration(
+              color:Colors.grey.shade200,
+              borderRadius: BorderRadius.circular(20)),
+      child: Row(
+        children: [
+          Container(
+            height: 350,
+            width: 220,
+            decoration: BoxDecoration(
+              color:Colors.grey,
+              borderRadius: BorderRadius.circular(20),
+              image: DecorationImage(
+                fit: BoxFit.cover,
+                image: NetworkImage("https://image.tmdb.org/t/p/w500$image"))),),
         Text(name,style: TextStyle(fontSize: 20,color: Colors.black),)
-      ],
+        ],
+      ),
     );
   }
 }

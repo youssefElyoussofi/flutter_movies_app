@@ -15,49 +15,45 @@ class MyApp extends StatelessWidget {
     return const MaterialApp(
       
       home:  Scaffold(
-         body:  Conter(),),
+         body:  Dashboard(),),
     );
   }
 }
 
-class Conter extends StatefulWidget {
-  const Conter({super.key});
+class Dashboard extends StatefulWidget {
+  const Dashboard({super.key});
 
   @override
-  State<Conter> createState() => _ConterState();
+  State<Dashboard> createState() => _DashboardState();
 }
 
-class _ConterState extends State<Conter> {
+class _DashboardState extends State<Dashboard> {
 
    late Future<List<Movie>> movies;
 
-   int  count = 0;
-
    @override
-   void initState() {
+  void initState() {
     movies = MovieService().getPopularMovies();
     super.initState();
   }
 
+
   @override
   Widget build(BuildContext context) {
-    return  FutureBuilder<List<Movie>>(
-      future: movies, 
-      builder: (context, snapshot) {
-        if(snapshot.connectionState == ConnectionState.waiting) {
-          return Center(child: CircleAvatar(),);
-        }
-        if (snapshot.hasData){
-         List<Movie> moviesData = snapshot.data!;
+
+    return FutureBuilder(future: movies, builder: (context, snapshot) {
+      if (snapshot.connectionState == ConnectionState.waiting) {
+        return const Center(child: CircularProgressIndicator());
+      }
+      if (snapshot.hasData){
+         List<Movie> tmpMovies = snapshot.data!;
          return ListView.builder(
-            itemCount: moviesData.length,
+            itemCount: tmpMovies.length,
             itemBuilder: (context, index) {
-            return ViewMovie(name: moviesData[index].name, image: moviesData[index].imgPath);
+           return ViewMovie(name: tmpMovies[index].name, image: tmpMovies[index].imgPath);
          },);
-        }
-        return const Center(child: Text("No data found"),);
-      },
-      );
+      }
+      return const Center(child: Text("No Data Found"),);
+    },);
   }
 }
-
