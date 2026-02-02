@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_movies_app/model/movie.dart';
 import 'package:flutter_movies_app/services/movie_service.dart';
-import 'package:flutter_movies_app/view/view_movie.dart';
+import 'package:flutter_movies_app/view/movie_details.dart';
+import 'package:flutter_movies_app/view/top_movies.dart';
 
 void main()
 {
@@ -12,10 +13,11 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return  MaterialApp(
       
       home:  Scaffold(
-         body:  Dashboard(),),
+         appBar: AppBar(title: const Center(child: Text("Movies")),),
+         body: const SafeArea(child: Dashboard()),),
     );
   }
 }
@@ -29,7 +31,10 @@ class Dashboard extends StatefulWidget {
 
 class _DashboardState extends State<Dashboard> {
 
+   late Widget view;
    late Future<List<Movie>> movies;
+   bool isDetails = false;
+   late int selectedIndex = 0;
 
    @override
   void initState() {
@@ -47,11 +52,26 @@ class _DashboardState extends State<Dashboard> {
       }
       if (snapshot.hasData){
          List<Movie> tmpMovies = snapshot.data!;
-         return ListView.builder(
-            itemCount: tmpMovies.length,
-            itemBuilder: (context, index) {
-           return ViewMovie(name: tmpMovies[index].name, image: tmpMovies[index].imgPath);
-         },);
+          
+         return Column(
+           children: [
+               TextButton(onPressed: () {
+                 isDetails = false;
+                 setState(() {
+                   
+                 });
+               }, child: Text("back")),
+               Expanded(child: 
+               isDetails?MovieDetails(movie: tmpMovies[selectedIndex],):
+               TopMovies(moviesList: tmpMovies, press: (index) {
+                 selectedIndex = index;
+                 isDetails = true;
+                 setState(() {
+                   
+                 });
+               },))
+           ],
+         );
       }
       return const Center(child: Text("No Data Found"),);
     },);

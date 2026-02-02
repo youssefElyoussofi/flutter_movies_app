@@ -16,7 +16,7 @@ class MovieService {
 
     for (var i = 0; i < list.length; i++) 
     {
-        movies.add(Movie(name: list[i]["name"], imgPath: list[i]["poster_path"]));
+        movies.add(Movie(name: list[i]["name"], imgPath: list[i]["poster_path"], overview: list[i]["overview"]));
     }
     return movies;
   }
