@@ -4,9 +4,9 @@ class Movie
 {
     final String overview;
     final String name;
-    final String imgPath;
+    final String _imgPath;
 
-    late String img = "https://image.tmdb.org/t/p/w500$imgPath";
+    String get img => "https://image.tmdb.org/t/p/w500$_imgPath";
     
-    Movie({required this.name,required this.imgPath,required this.overview});
+    Movie({required this.name,required String imgPath,required this.overview}):_imgPath = imgPath;
 }

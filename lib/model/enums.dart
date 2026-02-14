@@ -1,0 +1,2 @@
+
+enum MediaType {movie,serie}
