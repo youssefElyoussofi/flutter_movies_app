@@ -4,14 +4,14 @@ import 'package:flutter_movies_app/services/data.dart';
 import 'package:flutter_movies_app/viewmodel/view_media.dart';
 
 class ExpandList extends StatelessWidget {
-  final MediaType type;
+
   final String title;
   final Data data;
   const ExpandList({
     super.key,
     required this.data,
     required this.title,
-    required this.type,
+
   });
 
   @override
@@ -25,14 +25,15 @@ class ExpandList extends StatelessWidget {
           childAspectRatio: 0.6,
           crossAxisCount: 2,
         ),
-        itemCount: type == MediaType.movie
-            ? data.movies.length
-            : data.series.length,
+        itemCount: 
+             data.movies.length,
         itemBuilder: (context, index) {
-          return ViewMedia(
-            name: type == MediaType.movie ? data.movies[index].name : data.series[index].name,
-            image: type == MediaType.movie ? data.movies[index].img : data.series[index].img,
-          );
+          return 
+          ViewMedia(movie: data.movies[index]);
+          // ViewMedia(
+          //   name: type == MediaType.movie ? data.movies[index].name : data.series[index].name,
+          //   image: type == MediaType.movie ? data.movies[index].img : data.series[index].img,
+          // );
         },
       ),
     );

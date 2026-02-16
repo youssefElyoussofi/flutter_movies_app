@@ -6,23 +6,19 @@ import 'package:flutter_movies_app/services/data.dart';
 import 'package:flutter_movies_app/view/expand_list.dart';
 import 'package:flutter_movies_app/viewmodel/view_media.dart';
 
-class MediaList extends StatelessWidget {
+class MoviesList extends StatelessWidget {
   final Data data;
-  final MediaType type;
   final String title;
 
-  const MediaList({
+  const MoviesList({
     super.key,
     required this.data,
-    required this.type,
     required this.title,
   });
 
   @override
   Widget build(BuildContext context) {
-    bool status = type == MediaType.movie
-        ? data.movies.isEmpty
-        : data.series.isEmpty;
+
 
     return SizedBox(
       height: 320,
@@ -44,8 +40,9 @@ class MediaList extends StatelessWidget {
                     tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                   ),
                   onPressed: () {
+
                     Navigator.push(context, MaterialPageRoute(builder: (context) {
-                      return ExpandList(data: data,title: title,type: type);
+                      return ExpandList(data: data,title: title);
                     },));
                   },
                   child: Text("See All"),
@@ -54,25 +51,26 @@ class MediaList extends StatelessWidget {
             ),
           ),
 
-          status
+          data.movies.isEmpty
               ? const Expanded(
                   child: Center(child: CircularProgressIndicator()),
                 )
               : Expanded(
                   child: ListView.builder(
                     scrollDirection: Axis.horizontal,
-                    itemCount: type == MediaType.movie
-                        ? data.movies.length
-                        : data.series.length,
+                    itemCount: data.movies.length,
+
                     itemBuilder: (context, index) {
-                      return ViewMedia(
-                        name: type == MediaType.movie
-                            ? data.movies[index].name
-                            : data.series[index].name,
-                        image: type == MediaType.movie
-                            ? data.movies[index].img
-                            : data.series[index].img,
-                      );
+                      return 
+                      ViewMedia(movie: data.movies[index]);
+                      // ViewMedia(
+                      //   name: type == MediaType.movie
+                      //       ? data.movies[index].name
+                      //       : data.series[index].name,
+                      //   image: type == MediaType.movie
+                      //       ? data.movies[index].img
+                      //       : data.series[index].img,
+                      // );
                     },
                   ),
                 ),
