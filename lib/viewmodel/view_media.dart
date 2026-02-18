@@ -1,23 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_movies_app/model/movie.dart';
+import 'package:flutter_movies_app/model/media.dart';
+import 'package:flutter_movies_app/view/view_media_details.dart';
 
-import 'package:flutter_movies_app/services/data.dart';
-import 'package:flutter_movies_app/view/media_details.dart';
-import 'package:provider/provider.dart';
 
 class ViewMedia extends StatelessWidget {
-  final Movie movie;
+  final Media media;
 
-  const ViewMedia({super.key, required this.movie});
+  const ViewMedia({super.key, required this.media});
 
   @override
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
       decoration: BoxDecoration(
-      color: Color.fromARGB(25, 133, 26, 255),
-      borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: Color.fromARGB(66, 133, 26, 255),width: 1)
+        color: Color.fromARGB(25, 133, 26, 255),
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(color: Color.fromARGB(66, 133, 26, 255), width: 1),
       ),
       child: SizedBox(
         height: 250,
@@ -28,20 +26,22 @@ class ViewMedia extends StatelessWidget {
               flex: 6,
               child: GestureDetector(
                 onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) {
-                    return MediaDetails(movie: movie);
-                  },));
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) {
+                        return ViewMediaDetails(media: media);
+                      },
+                    ),
+                  );
                 },
                 child: Container(
-                  // margin: EdgeInsets.all(5),
-                  // height: 250,
-                  // width: 150,
                   decoration: BoxDecoration(
                     color: Colors.grey,
                     borderRadius: BorderRadius.circular(20),
                     image: DecorationImage(
                       fit: BoxFit.cover,
-                      image: NetworkImage(movie.img),
+                      image: NetworkImage(media.img),
                     ),
                   ),
                 ),
@@ -55,7 +55,7 @@ class ViewMedia extends StatelessWidget {
                   child: Text(
                     overflow: TextOverflow.ellipsis,
                     maxLines: 1,
-                    movie.name,
+                    media.name,
                     // style: TextStyle(fontSize: 30, color: Colors.black),
                     textAlign: TextAlign.center,
                   ),

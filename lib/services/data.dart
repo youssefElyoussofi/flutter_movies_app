@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_movies_app/model/movie.dart';
-import 'package:flutter_movies_app/model/movie_details.dart';
-import 'package:flutter_movies_app/model/serie.dart';
-import 'package:flutter_movies_app/services/movie_service.dart';
-import 'package:flutter_movies_app/services/serie_service.dart';
+import 'package:flutter_movies_app/model/enums.dart';
+import 'package:flutter_movies_app/model/media.dart';
+import 'package:flutter_movies_app/model/media_details.dart';
+import 'package:flutter_movies_app/services/media_service.dart';
 
 
 
@@ -11,44 +10,49 @@ class Data extends ChangeNotifier
 {
   Data()
   {
-    fetchMoviesWide();
-    fetchMovies();
-    fetchSeries();
+    fetchPopularMovies();
+    fetchPopularSeries();
+    fetchTopRatedMovies();
+    fetchTopRatedSeries();
   }
-    List<Movie> wideMovies = [];
+    List<Media> topRatedMovies = [];
+    List<Media> popularMovies = [];
+    List<Media> topRatedseries = [];
+    List<Media> popularSeries = [];
 
-    List<Movie> movies = [];
-    List<Serie> series = [];
-
-    MovieDetails? movieDetails;
+    MediaDetails? mediaDetails;
   
 
-
-    void fetchMoviesWide() async {
-        wideMovies = await MovieService().getPlayingNowWide();
-        notifyListeners();
-    }
-    void fetchMovies() async {
-        movies = await MovieService().getPopularMovies();
+    void fetchPopularMovies() async {
+        popularMovies = await MediaService().getMediaList(MediaType.movie,ListType.popular);
         notifyListeners();
     }
 
-    void fetchSeries() async {
-      series = await SerieService().getTopSeries();
-      notifyListeners();
+    void fetchPopularSeries() async {
+        popularSeries = await MediaService().getMediaList(MediaType.serie,ListType.popular);
+        notifyListeners();
+    }
+
+    void fetchTopRatedMovies() async {
+      topRatedMovies = await MediaService().getMediaList(MediaType.movie,ListType.topRated);
+            notifyListeners();
+    }
+
+    void fetchTopRatedSeries() async {
+      topRatedseries = await MediaService().getMediaList(MediaType.serie, ListType.topRated);
     }
 
     int? currentId;
 
-    void getMovieDetails(int id, String img) async{
+    void getMovieDetails(int id, MediaType type) async{
       
         if (id == currentId) {
           return;
         }
         currentId = id;
-        movieDetails = null;
+        mediaDetails = null;
         
-        movieDetails = await MovieService().getMovieDetails(id);
+        mediaDetails = await MediaService().getMediaDetails(type, id);
         notifyListeners();
 
     }

@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_movies_app/model/enums.dart';
 import 'package:flutter_movies_app/services/data.dart';
+import 'package:flutter_movies_app/view/components/dashboar_search_widget.dart';
 import 'package:flutter_movies_app/view/media_list.dart';
-import 'package:flutter_movies_app/view/wide_list.dart';
 import 'package:provider/provider.dart';
 
 void main() {
@@ -40,9 +39,16 @@ class Dashboard extends StatelessWidget {
         title: Text("CinemaFlow"),),
       body: ListView(
         children: [
-          WideList(movies: data.wideMovies,title: "Playing Now",),
-       MoviesList(data: data, title: 'Top Movies'),
-        // MediaList(data: data, title: 'Top Series', type: MediaType.serie,),
+          DashboarSearchWidget(),
+       MoviesList(title: 'Popular Movies', mediaList: data.popularMovies,),
+
+       MoviesList(title: 'Top Movies', mediaList: data.topRatedMovies,),
+       MoviesList(title: 'Popular Series', mediaList: data.popularSeries,),
+
+       
+
+       MoviesList(title: 'Top Series', mediaList: data.topRatedseries,),
+
 
 
         ]
